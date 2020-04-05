@@ -1,0 +1,7 @@
+{
+  "routes":
+    {
+    "contractor" : "https://app.qa.overpass.com/auth/account/register/contractor/"
+    "client" : "https://app.qa.overpass.com/auth/account/register/contractor/"
+    }
+}
