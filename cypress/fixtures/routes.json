@@ -1,7 +1,7 @@
 {
-  "routes":
-    {
-    "contractor" : "https://app.qa.overpass.com/auth/account/register/contractor/"
-    "client" : "https://app.qa.overpass.com/auth/account/register/contractor/"
-    }
+    "signUp":
+      {
+      "contractor" : "/auth/account/register/contractor/",
+      "client" : "/auth/account/register/client/"
+      }
 }

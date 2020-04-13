@@ -1,88 +1,72 @@
 /// <reference types="Cypress" />
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 Cypress.Commands.add('apiLogin', ()=>{
     cy.request({
         method: 'POST',
-        url: 'https://api-iam.intercom.io/messenger/web/ping',
+        url: Cypress.env('api_server') + 'auth/',
+        form: false,
         headers: {
-            "Content-Type": "application/json",
-            "accept": "*/*",
-            "origin": "https://e2e.app.slot.overpass.com"},
+            "Content-Type": "application/json"},
         body: {
-            "app_id": "psx0qvex",
-            "v": "3",
-            "g": "45fc3c127730946b000347f9817935fee2362bbf",
-            "s": "9136fe67-7158-4859-8c19-915b5e38416b",
-            "user_data": "{\"email\":\"demo+clientq@overpass.com\",\"name\":\"Client User\",\"company\":{},\"userId\":\"user::b9f69deb-46f9-41bf-801c-4849f1779341\",\"System-Version\":\"0.70.0\",\"Number-of-environments\":1,\"User-type\":\"client\",\"Role\":\"admin\",\"Current environment\":\"e2e-Transilvania Cluj\"}"
+            "procedure": "auth.login",
+            "args": [
+                {
+                    "reqId": "725b0f20-78b7-11ea-8ae0-0bde63b4c79a"
+                },
+                {
+                    "username": "demo+clientQ@overpass.com",
+                    "passwordHash": "0cef1fb10f60529028a71f58e54ed07b"
+                },
+                true
+            ]
         }
     })
         .then((res) => {
-            Cypress.log({message: res.body});
             expect(res.status).to.eq(200);
+            cy.setCookie('auth_key', res.body.args[0].data.authToken);
         });
 });
 
-Cypress.Commands.add('login', () => {
+Cypress.Commands.add('login', (user, pass) => {
     cy.fixture('users.json').then ((users) =>{
-        cy.get('[ref="emailInput"]', {timeout:10000}).type(users.username + '{enter}');
-        cy.get('[ref="passwordInput"]', {timeout:10000}).type(users.password + '{enter}');
-        cy.get('body', {timeout:10000}).then(($body) => {
-            if ($body.find('.au-target.yes.fl_short.go_bg')) {
-                cy.get('.au-target.yes.fl_short.go_bg', {timeout:10000}).click();
-            } else
-                {return $body}
+        const $btn = 'au-target popup_container small';
+        cy.get('[ref="emailInput"]', {timeout:10000}).type(user + '{enter}');
+        cy.get('[ref="passwordInput"]', {timeout:10000}).type(pass);
+
+        // Click login and handle "alreadly logged in" prompt
+        cy.get('[type=\'submit\']').click().then(()=> {
+            cy.contains('.btn.alt_btn.loading_btn').should('not.visible');
+            cy.get("body").then($body => {
+                cy.log('**********************');
+                if ($body.find("[class='au-target popup_container small']").length > 0) {
+                    cy.log("Found prompt");//evaluates as true
+                    cy.get("[class='au-target popup_container small'] span").first()
+                        .click();
+                }
+                cy.log("out")
+            });
         });
-        // cy
-        //     .get('.au-target.yes.fl_short.go_bg').click()
-        //     .catch((err) => {
-        //         Cypress.log({"mesasage": "pop-up not present"})
-        //         });
     });
 });
+
 
 Cypress.Commands.add('logout', () => {
-    cy.get('.ub_info.angle-down').click().then(()=>{
-        cy.contains('logout()').click();
-    });
+        cy.get('.user-box-container.au-target').click().then(()=>{
+            cy.get('li .pad_2.bd-b_1.dd_item.au-target').click();
+        });
+        cy.clearLocalStorage();
 });
 
-Cypress.Commands.add('waitForSpinner', ()=> {
-    cy.contains('spin 2s').should.not('be.visible');
-});
 
 Cypress.Commands.add('visitLogin', ()=> {
+    cy.viewport(1366, 768);
+    cy.clearLocalStorage();
+    cy.clearCookies();
     cy.visit('/auth/login/', {
         onBeforeLoad: win => {
             win.sessionStorage.clear();
         },
-        timeout: 25000
+        timeout: 15000
     });
-    cy.viewport('macbook-15');
-    cy.clearCookies();
-    // cy.get('.nav__link-enhanced a').click(); click Login button on hPage
 });
+

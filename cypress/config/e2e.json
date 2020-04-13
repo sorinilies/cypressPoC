@@ -1,0 +1,4 @@
+{
+  "baseUrl": "https://e2e.app.slot.overpass.com/",
+  "apiServer": "https://gps.e2e.overpass.com/"
+}

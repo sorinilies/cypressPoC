@@ -1,5 +1,9 @@
 {
-  "baseUrl": "https://app.qa.overpass.com",
+  "baseUrl": "https://app.qa.overpass.com/",
+  "env": {
+    "api_server": "http://localhost:9090/",
+    "home": "/auth/account/welcome/"
+  },
   "integrationFolder": "cypress/specs",
   "projectId": "pqrjuu",
   "defaultCommandTimeout": 10000,

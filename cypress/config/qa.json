@@ -1,0 +1,4 @@
+{
+  "baseUrl": "https://app.qa.overpass.com/",
+  "api_server": "https://gps.qa.overpass.com/"
+}

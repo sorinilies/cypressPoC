@@ -1,0 +1,12 @@
+{
+  "specName": "login.spec.js",
+  "title": "Dispaly select a campaign error message",
+  "suiteName": "Login suite",
+  "testId": "r3",
+  "testName": "Login suite Dispaly select a campaign error message",
+  "testError": "Timed out retrying: Expected to find content: 'Sorin I' but never did.",
+  "testCommands": [
+    "contains Sorin I"
+  ],
+  "screenshot": "dispaly-select-a-campaign-error-message (failed).png"
+}
