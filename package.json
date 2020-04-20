@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/sorinilies/cypressPoC#readme",
   "devDependencies": {
-    "cypress": "^4.3.0",
+    "cypress": "^4.4.0",
     "cypress-failed-log": "^2.6.2",
     "cypress-xpath": "^1.4.0"
   }

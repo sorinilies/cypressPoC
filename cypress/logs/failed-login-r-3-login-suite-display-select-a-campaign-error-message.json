@@ -1,0 +1,29 @@
+{
+  "specName": "login.spec.js",
+  "title": "Display select a campaign error message",
+  "suiteName": "Login suite",
+  "testId": "r3",
+  "testName": "Login suite Display select a campaign error message",
+  "testError": "Timed out retrying: expected '<div.campaignError.au-target>' to be 'visible'\n\nThis element `<div.campaignError.au-target>` is not visible because its content is being clipped by one of its parent elements, which has a CSS property of overflow: `hidden`, `scroll` or `auto`",
+  "testCommands": [
+    "contains Client U",
+    "get .au-target.tab-btn_component.crm",
+    "click ",
+    "new url https://e2e.app.slot.overpass.com/environment/environment-crm",
+    "get span .btn.circle_btn.call_btn.au-target",
+    "assert expected **{ Object (length, prevObject, ...) }** to be **visible**",
+    "new url https://e2e.app.slot.overpass.com/environment/environment-crm/?page=1&selectedContact=contact%3A%3A6c76b960-9beb-11e8-85d1-c90c959609ec&sort=UPDATED_ASC",
+    "get .btn.circle_btn.call_btn.au-target .fa.fa-phone",
+    "click ",
+    "xhr  POST https://api-js.mixpanel.com/engage/?ip=1&_=1587390359567",
+    "xhr  POST https://api-js.mixpanel.com/engage/?ip=1&_=1587390360214",
+    "xhr  POST https://api-js.mixpanel.com/engage/?ip=1&_=1587390360446",
+    "get .au-target.arrow-panel.arrow-pos-top.arrow-align-right.arrow-size-l",
+    "assert expected **<div.au-target.arrow-panel.arrow-pos-top.arrow-align-right.arrow-size-l>** to be **visible**",
+    "get .call-btn-wrapper button",
+    "click ",
+    "contains Please select a campaign",
+    "assert expected **<div.campaignError.au-target>** to be **visible**"
+  ],
+  "screenshot": "display-select-a-campaign-error-message (failed).png"
+}

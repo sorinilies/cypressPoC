@@ -1,5 +1,5 @@
 {
-  "baseUrl": "https://app.qa.overpass.com/",
+  "baseUrl": "https://e2e.app.slot.overpass.com/",
   "env": {
     "api_server": "http://localhost:9090/",
     "home": "/auth/account/welcome/"

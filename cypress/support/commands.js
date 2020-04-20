@@ -34,25 +34,25 @@ Cypress.Commands.add('login', (user, pass) => {
         cy.get('[ref="passwordInput"]', {timeout:10000}).type(pass);
 
         // Click login and handle "alreadly logged in" prompt
-        cy.get('[type=\'submit\']').click().then(()=> {
-            cy.contains('.btn.alt_btn.loading_btn').should('not.visible');
+        cy.get('[type=\'submit\']').click({timeout:10000}).then(()=> {
+            cy.get('[class="spinner spin_in_btn"]').should('not.visible');
+            cy.wait(1500);
             cy.get("body").then($body => {
-                cy.log('**********************');
-                if ($body.find("[class='au-target popup_container small']").length > 0) {
-                    cy.log("Found prompt");//evaluates as true
+                if ($body.find("[class='au-target popup_container small']", {timeout:5000}).length > 0) {
+                    cy.log("Found prompt");
                     cy.get("[class='au-target popup_container small'] span").first()
-                        .click();
+                        .click({timeout:10000});
                 }
-                cy.log("out")
             });
         });
+        cy.get('[class="spinner spin_in_btn"]').should('not.visible');
     });
 });
 
 
 Cypress.Commands.add('logout', () => {
-        cy.get('.user-box-container.au-target').click().then(()=>{
-            cy.get('li .pad_2.bd-b_1.dd_item.au-target').click();
+        cy.get('.user-box-container.au-target').should('be.visible').click().then(()=>{
+            cy.get('li .pad_2.bd-b_1.dd_item.au-target').should('be.visible').click();
         });
         cy.clearLocalStorage();
 });
@@ -69,4 +69,22 @@ Cypress.Commands.add('visitLogin', ()=> {
         timeout: 15000
     });
 });
+
+Cypress.Commands.add('nav', ()=> {
+    function campaigns() {
+        cy.get('.au-target.tab-btn_component.dashboard').click();
+    }
+    function contacts() {
+        cy.get('.au-target.tab-btn_component.crm').click();
+    }
+    function marketplace() {
+        cy.get('.au-target.tab-btn_component.marketplace').click();
+    }
+    function marketplace() {
+        cy.get('.au-target.tab-btn_component.workforce').click();
+    }
+
+    return this
+});
+
 

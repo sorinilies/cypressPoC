@@ -1,6 +1,13 @@
+
+
+
 class HomePage{
     visit() {
         cy.visit('/environment/dashboard');
+    }
+
+    logout() {
+
     }
 
 }
