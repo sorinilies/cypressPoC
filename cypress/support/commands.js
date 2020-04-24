@@ -27,6 +27,14 @@ Cypress.Commands.add('apiLogin', ()=>{
         });
 });
 
+
+/**
+ * @type {Cypress.EnqueuedCommand}
+ * @function Login
+ * Login with user and password, handles already logged in prompt.
+ * @param {string} user - username string
+ * @param {string} pass - password string
+ */
 Cypress.Commands.add('login', (user, pass) => {
     cy.fixture('users.json').then ((users) =>{
         const $btn = 'au-target popup_container small';
@@ -42,10 +50,11 @@ Cypress.Commands.add('login', (user, pass) => {
                     cy.log("Found prompt");
                     cy.get("[class='au-target popup_container small'] span").first()
                         .click({timeout:10000});
+                    cy.get('[class="spinner spin_in_btn"]').should('not.visible');
+                    cy.get('[ref="passwordInput"]').should('not.visible');
                 }
             });
         });
-        cy.get('[class="spinner spin_in_btn"]').should('not.visible');
     });
 });
 
@@ -56,7 +65,6 @@ Cypress.Commands.add('logout', () => {
         });
         cy.clearLocalStorage();
 });
-
 
 Cypress.Commands.add('visitLogin', ()=> {
     cy.viewport(1366, 768);
@@ -70,21 +78,33 @@ Cypress.Commands.add('visitLogin', ()=> {
     });
 });
 
-Cypress.Commands.add('nav', ()=> {
-    function campaigns() {
-        cy.get('.au-target.tab-btn_component.dashboard').click();
-    }
-    function contacts() {
-        cy.get('.au-target.tab-btn_component.crm').click();
-    }
-    function marketplace() {
-        cy.get('.au-target.tab-btn_component.marketplace').click();
-    }
-    function marketplace() {
-        cy.get('.au-target.tab-btn_component.workforce').click();
-    }
 
-    return this
+
+/**
+ * @type {Cypress.EnqueuedCommand}
+ * @function nav
+ * Navigate to section.
+ * @param {string} section - section name
+ */
+Cypress.Commands.add('nav', (section)=> {
+        section = section.toLowerCase();
+        switch (section) {
+            case 'campaigns':
+                cy.get('[href="/environment/dashboard"]').click();
+                break;
+
+            case 'contacts':
+                cy.get('[href="/environment/environment-crm"]').click();
+                break;
+
+            case 'marketplace':
+                cy.get('[href="/environment/marketplace"]').click();
+                break;
+
+            case 'workforce':
+                cy.get('[href="/environment/workforce"]').click();
+                break;
+        }
 });
 
 

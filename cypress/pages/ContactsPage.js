@@ -1,4 +1,6 @@
+const ContactsLocators = {
 
+};
 
 
 class ContactsPage{
@@ -7,7 +9,6 @@ class ContactsPage{
     }
 
     callNow() {
-
     }
 
 

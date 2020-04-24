@@ -24,4 +24,9 @@ describe('Login suite', function () {
         });
         cy.contains('Please select a campaign').should('be.visible');
     });
+
+
+    it('should ', function () {
+        
+    });
 });
