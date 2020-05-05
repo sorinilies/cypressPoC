@@ -1,0 +1,18 @@
+{
+  "specName": "login.spec.js",
+  "title": "should login through backend",
+  "suiteName": "Login suite",
+  "testId": "r5",
+  "testName": "Login suite should login through backend",
+  "testError": "Timed out retrying: Expected to find content: 'Client U' but never did.",
+  "testCommands": [
+    "visit /dashboard",
+    "xhr  GET https://api-js.mixpanel.com/decide/?verbose=1&version=1&lib=web&token=cf27a8485736750753c9e8855bd1ad79&ip=1&_=1588253075107",
+    "xhr  POST https://api-js.mixpanel.com/track/?ip=1&_=1588253075181",
+    "xhr  GET https://recorder.sessionstack.com/api/settings?url=https://e2e.app.slot.overpass.com/dashboard&_=1588253070647",
+    "contains Client U",
+    "new url https://e2e.app.slot.overpass.com/auth/account/welcome",
+    "new url https://e2e.app.slot.overpass.com/auth/login?redirectUrl=/auth/account/welcome"
+  ],
+  "screenshot": "should-login-through-backend (failed).png"
+}

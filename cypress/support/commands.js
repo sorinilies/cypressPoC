@@ -1,4 +1,6 @@
 /// <reference types="Cypress" />
+import { setInexedDbToken } from './utils'
+
 
 Cypress.Commands.add('apiLogin', ()=>{
     cy.request({
@@ -23,7 +25,8 @@ Cypress.Commands.add('apiLogin', ()=>{
     })
         .then((res) => {
             expect(res.status).to.eq(200);
-            cy.setCookie('auth_key', res.body.args[0].data.authToken);
+            setInexedDbToken(res.body.args[0].data.authToken);
+            // cy.setCookie('auth_key', res.body.args[0].data.authToken);
         });
 });
 
@@ -106,5 +109,9 @@ Cypress.Commands.add('nav', (section)=> {
                 break;
         }
 });
+
+
+
+
 
 

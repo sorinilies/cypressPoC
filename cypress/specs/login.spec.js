@@ -5,7 +5,8 @@ describe('Login suite', function () {
         cy.fixture('users.json').as('users').then(()=> {
             cy.visitLogin();
             cy.contains('Welcome to Overpass', {timeout:15000}).should('be.visible');
-            cy.login(this.users.client2.username, this.users.client2.password);
+            // cy.login(this.users.client2.username, this.users.client2.password);
+            cy.apiLogin();
         })
     });
 
@@ -26,7 +27,8 @@ describe('Login suite', function () {
     });
 
 
-    it('should ', function () {
-        
+    it.only('should login through backend', function () {
+        cy.visit('/environment/dashboard')
+        cy.contains(this.users.client2.name);
     });
 });
